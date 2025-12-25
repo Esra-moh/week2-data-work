@@ -1,22 +1,18 @@
-from dataclasses import dataclass
 from pathlib import Path
+import pandas as pd
 
 
-@dataclass(frozen=True)
-class Paths:
-    root: Path
-    raw: Path
-    cache: Path
-    processed: Path
-    external: Path
+def read_orders_csv(path: Path) -> pd.DataFrame:
+  
+    return pd.read_csv(path)
 
 
-def make_paths(root: Path) -> Paths:
-    data = root / "data"
-    return Paths(
-        root=root,
-        raw=data / "raw",
-        cache=data / "cache",
-        processed=data / "processed",
-        external=data / "external",
-    )
+def read_users_csv(path: Path) -> pd.DataFrame:
+
+    return pd.read_csv(path)
+
+
+def write_parquet(df: pd.DataFrame, path: Path) -> None:
+  
+    path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(path, index=False)
